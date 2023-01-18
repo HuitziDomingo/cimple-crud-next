@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Card from '../components/Card'
 
 const Crud = () => {
 
@@ -8,6 +9,7 @@ const Crud = () => {
   const [description, setDescription] = useState("")
   const [id, setId] = useState(1)
   const [arr, setArr] = useState([])
+  const [card, setCard] = useState({})
 
 
   const handleSubmit = e => {
@@ -15,6 +17,9 @@ const Crud = () => {
     if (name && task && description) {
       setId(id + 1)
       setArr([...arr, { name, task, description, id }])
+      setCard({
+        name: name,
+      })
 
     }
     else alert("llenar todos los campos")
@@ -63,16 +68,20 @@ const Crud = () => {
         <button>Crear</button>
       </form>
 
+
       <div>
         {
           arr.map((x, k) => (
             <div key={k}>
-              <div>{x.name}</div>
-              <div>{x.task}</div>
-              <div>{x.description}</div>
-              <div>{x.id}</div>
-              <button onClick={() => handleUpdate(x)}>Editar</button>
-              <button onClick={() => handleDelete(x)}>Eliminar</button>
+              <Card 
+                data={{
+                  name: x.name,
+                  task: x.task,
+                  description: x.description,
+                  handleDelete: () => handleDelete(x)
+                }}
+              />
+              
             </div>
           ))
         }
